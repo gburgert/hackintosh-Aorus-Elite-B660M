@@ -38,22 +38,6 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>_OSI override to return true through Windows 10 - requires _OSI to XOSI rename</string>
-				<key>Enabled</key>
-				<false/>
-				<key>Path</key>
-				<string>SSDT-XOSI.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>SSDT to disable USB RHUB/HUBN/URTH and rename devices</string>
-				<key>Enabled</key>
-				<false/>
-				<key>Path</key>
-				<string>SSDT-USB-Reset.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>Incompatible AWAC Fix</string>
 				<key>Enabled</key>
 				<true/>
@@ -1201,7 +1185,7 @@
 			<key>SystemSerialNumber</key>
 			<string></string>
 			<key>SystemUUID</key>
-			<string>2819DFB0-34E3-44F5-9169-61F24FA73F4F</string>
+			<string></string>
 		</dict>
 		<key>UpdateDataHub</key>
 		<true/>
