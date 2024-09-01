@@ -128,7 +128,7 @@ git clone https://github.com/corpnewt/GenSMBIOS
 choco install explorerplusplus  
 ```
 \
-**SDDTTime - IRQ conflict**  
+**SDDTTime - vários SSDTs**  
 https://github.com/corpnewt/SSDTTime  
 ```  
 git clone https://github.com/corpnewt/SSDTTime.git  
@@ -136,6 +136,7 @@ git clone https://github.com/corpnewt/SSDTTime.git
 \
 **Instala o usb tool do Windows**  
 https://github.com/USBToolBox/tool  
+  
 ## Ferramentas MacOS  
 Ferramentas para o refinamento do sistema.  
 \
@@ -243,26 +244,31 @@ https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/usi
 ```
 SSDTTIME\SSDTTime.bat  
 p. dump acpi tables  
-1 - fix hpet, C (default), fez SSDT-HPET  
-2 - fake EC, fez SSDT-EC  
-4 - usbx, B (build), fez SSDT-usbx   
+1 - fix hpet, C (default), fez SSDT-HPET.aml  
+2 - fake EC, fez SSDT-EC.aml  
+4 - usbx, B (build), fez SSDT-USBX.aml  
 5 - plugintype, fez SSDT-PLUG-ALT.aml  
 7 - rtcawac, fez SSDT-RTCAWAC.aml  
-A - XOSI, 19, fez SSDT-XOSI (acho q não vou usar)  
 ```
 Em SSDTTIME\results vai ter os ssdts  
---> copiar SSDT-XOSI.dsl, SSDT-RTCAWAC.aml, SSDT-EC.aml  
-  
+    
 **SSDT-PLUG is not required on macOS 12.3 and up.**  
 https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#enabling-x86platformplugin  
+Precisa. Usar o SSDT-PLUG-ALT.aml gerado pelo SSDTTime.  
   
-**https://dortania.github.io/Getting-Started-With-ACPI/ssdt-methods/ssdt-prebuilt.html#desktop-comet-lake**  
-https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/compiled/SSDT-EC-USBX-DESKTOP.aml  
-https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/compiled/SSDT-AWAC.aml  
-  
+**SSDT-RHUB Gigabyte and AsRock motherboards do not need this SSDT**  
+https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#acpi  
+   
 **XCPM power management pro Alder Lake**  
 https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/Source/SSDT-PLUG-ALT.dsl  
-Baixa do git depois compila com o maciasl  
+Usei o gerado pelo SSDTTime. Deixo aqui vai que precisa.  
+  
+**SSDT Comet Lake**  
+https://dortania.github.io/Getting-Started-With-ACPI/ssdt-platform.html#desktop  
+Sobrou EC-USBX e AWAC. Vou pegar do SSDTTime.  
+SSDT-EC  
+SSDT-USBX  
+SSDT-RTCAWAC  
   
 ## Montar o config.plist  
 https://dortania.github.io/OpenCore-Install-Guide/config.plist/  
