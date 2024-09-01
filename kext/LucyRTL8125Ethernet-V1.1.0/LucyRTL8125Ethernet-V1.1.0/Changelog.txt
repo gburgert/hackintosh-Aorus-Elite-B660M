@@ -1,0 +1,14 @@
+Changelog
+---------
+
+Version 1.1.0 (2021-04-25)
+- Changed version number to 1.1.0 to make it an official release.
+
+Version 1.1.0d12 (2021-04-25)
+- Updated Linux sources to 9.005.01.
+- Fixed auto-negotiation for all speeds (including 2.5 Gigabit).
+- Added support for adaptive poll interval in 2.5 Gigabit mode.
+
+Version 1.0.0 (2020-08-15)
+- First official release.
+
