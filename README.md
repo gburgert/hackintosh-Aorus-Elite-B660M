@@ -258,7 +258,8 @@ Precisa. Usar o SSDT-PLUG-ALT.aml gerado pelo SSDTTime.
   
 **SSDT-RHUB Gigabyte and AsRock motherboards do not need this SSDT**  
 https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#acpi  
-   
+De fato não precisa. Removi.  
+  
 **XCPM power management pro Alder Lake**  
 https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/Source/SSDT-PLUG-ALT.dsl  
 Usei o gerado pelo SSDTTime. Deixo aqui vai que precisa.  
@@ -266,10 +267,10 @@ Usei o gerado pelo SSDTTime. Deixo aqui vai que precisa.
 **SSDT Comet Lake**  
 https://dortania.github.io/Getting-Started-With-ACPI/ssdt-platform.html#desktop  
 Sobrou EC-USBX e AWAC. Vou pegar do SSDTTime.  
-SSDT-EC  
-SSDT-USBX  
-SSDT-RTCAWAC  
-  
+SSDT-EC.aml  
+SSDT-USBX.aml  
+SSDT-RTCAWAC.aml  
+    
 ## Montar o config.plist  
 https://dortania.github.io/OpenCore-Install-Guide/config.plist/  
 ```
@@ -446,3 +447,7 @@ P -> dump tables
 A -> xosi -> a  
    
 Agora colocar esse monte de aml no ACPI   
+
+## TODO  
+https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
+Configurar o cpufriend.  
