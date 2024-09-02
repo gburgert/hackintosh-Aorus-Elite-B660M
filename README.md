@@ -240,11 +240,11 @@ Colocar tudo em EFI\OC\Kexts
 *FIM DOS KEXTS*  
   
 ### ACPI/SSDT  
-Dicas aqui
+Dicas aqui  
 https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
   
-**SSDTTime**
-https://dortania.github.io/Getting-Started-With-ACPI/ssdt-methods/ssdt-easy.html#running-ssdttime
+**SSDTTime**  
+https://dortania.github.io/Getting-Started-With-ACPI/ssdt-methods/ssdt-easy.html#running-ssdttime  
 ```
 SSDTTIME\SSDTTime.bat  
 p. dump acpi tables  
@@ -255,7 +255,7 @@ p. dump acpi tables
 7 - rtcawac, fez SSDT-RTCAWAC.aml  
 ```
 Em SSDTTIME\results vai ter os ssdts e os patches para acrescentar no config.plist  
-    
+  
 **SSDT-PLUG is not required on macOS 12.3 and up.**  
 https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#enabling-x86platformplugin  
 Precisa. Usar o SSDT-PLUG-ALT.aml gerado pelo SSDTTime.  
