@@ -240,17 +240,21 @@ Colocar tudo em EFI\OC\Kexts
 *FIM DOS KEXTS*  
   
 ### ACPI/SSDT  
+Dicas aqui
 https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
+  
+**SSDTTime**
+https://dortania.github.io/Getting-Started-With-ACPI/ssdt-methods/ssdt-easy.html#running-ssdttime
 ```
 SSDTTIME\SSDTTime.bat  
 p. dump acpi tables  
-1 - fix hpet, C (default), fez SSDT-HPET.aml  
-2 - fake EC, fez SSDT-EC.aml  
+1 - fix IRQ, C (default), fez SSDT-HPET.aml  
+2 - fake EC for Catalina and newer users, fez SSDT-EC.aml  
 4 - usbx, B (build), fez SSDT-USBX.aml  
 5 - plugintype, fez SSDT-PLUG-ALT.aml  
 7 - rtcawac, fez SSDT-RTCAWAC.aml  
 ```
-Em SSDTTIME\results vai ter os ssdts  
+Em SSDTTIME\results vai ter os ssdts e os patches para acrescentar no config.plist  
     
 **SSDT-PLUG is not required on macOS 12.3 and up.**  
 https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#enabling-x86platformplugin  
@@ -266,11 +270,19 @@ Usei o gerado pelo SSDTTime. Deixo aqui vai que precisa.
   
 **SSDT Comet Lake**  
 https://dortania.github.io/Getting-Started-With-ACPI/ssdt-platform.html#desktop  
-Sobrou EC-USBX e AWAC. Vou pegar do SSDTTime.  
+Sobrou EC-USBX e AWAC. Vou pegar os gerados pelo SSDTTime.  
 SSDT-EC.aml  
 SSDT-USBX.aml  
 SSDT-RTCAWAC.aml  
-    
+  
+**IRQ fix**  
+https://dortania.github.io/Getting-Started-With-ACPI/Universal/irq.html  
+Entra com o SSDT-HPET.aml e os patches *HPET _STA to XSTA Rename*, *HPET _CRS to XCRS Rename* e *IRQ Patches* gerados pelo SSDTTime.  
+  
+**SSDTs a verificar o que são**  
+SSDT-SBUS.aml  
+SSDT-PCID.aml  
+
 ## Montar o config.plist  
 https://dortania.github.io/OpenCore-Install-Guide/config.plist/  
 ```
@@ -317,6 +329,7 @@ MinKernel     19.0.0
 ```
 AppleXcpmCfgLock:        False  (Not needed if CFG-Lock is disabled in the BIOS)  
 DisableIoMapper:         True 	 (Para não ter de desligar o VT-D no BIOS)  
+DisableLinkeditJettison  True  
 PanicNoKextDump:         True  
 PowerTimeoutKernelPanic: True  
 ProvideCurrentCpuInfo:   True (precisa se bem me lembro por causa do fake cpu)  
@@ -357,7 +370,7 @@ ScanPolicy:           0
 SecureBootModel:      Default  
 Vault:                Optional  
 ```  
-**Root->NVRam**  
+**Root->NVRam->add**  
 Teclado https://github.com/acidanthera/OpenCorePkg/blob/master/Utilities/AppleKeyboardLayouts/AppleKeyboardLayouts.txt  
 [128] pt_BR - Brazilian-ABNT2 (lingua:teclado)  
 ```
@@ -369,7 +382,21 @@ prev-lang:kbd String en-US:128
 ->4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102  
 revcpuname:   String    Intel i3-12100F  
 revcpu:       Number    1  
+```  
 ```
+->7C436110-AB2A-4BBB-A880-FE41995C9F82  
+boot-args:         -v  keepsyms=1 alcid=12  
+csr-active-config: 03080000  
+prev-lang:kbd:     en-US:128  
+```
+  
+**Root->NVRam->delete**  
+Tive problema pra atualizar o valor do csr e esse delete ajudou.  
+```
+->7C436110-AB2A-4BBB-A880-FE41995C9F82  
+2: (String) csr-active-config  
+```
+  
 **Root->PlatformInfo->Generic**  
 Roda o gensmbios. Até inserir esses dados no config.plist a máquina não completava o boot. Suspeito que seja pela falta da ROM.  
 ```
@@ -397,7 +424,7 @@ SystemUUID:         SSSSUUID
 https://github.com/acidanthera/RestrictEvents  
 ProcessorType=0x601  (menos de 8 cores)  
   
-**Root->UEFI->Quirks->ReleaseUsbOwnership**: False (tava true no meu não sei porque)  
+**Root->UEFI->Quirks->ReleaseUsbOwnership**: False (system freeze on boot. Not recommended unless specifically required)  
   
 ## Intel BIOS settings  
 ### Disable  
@@ -451,3 +478,8 @@ Agora colocar esse monte de aml no ACPI
 ## TODO  
 https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
 Configurar o cpufriend.  
+  
+## Cuticuti  
+  
+**Overclock Radeon**  
+https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md  
