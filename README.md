@@ -280,8 +280,8 @@ https://dortania.github.io/Getting-Started-With-ACPI/Universal/irq.html
 Entra com o SSDT-HPET.aml e os patches *HPET _STA to XSTA Rename*, *HPET _CRS to XCRS Rename* e *IRQ Patches* gerados pelo SSDTTime.  
   
 **SSDTs a verificar o que são**  
-SSDT-SBUS.aml  
-SSDT-PCID.aml  
+SSDT-SBUS.aml - tá no [Cuticuti](##Cuticuti)  
+SSDT-PCID.aml - dmac. Não vi necessidade   
 
 ## Montar o config.plist  
 https://dortania.github.io/OpenCore-Install-Guide/config.plist/  
@@ -505,7 +505,17 @@ Done.
 ```
 Gravou CPUFriendDataProvider.kext no Results.    
 https://github.com/acidanthera/CPUFriend/releases  
-Entendi que precisa também do CPUFriend.kext.   
+Colocar o CPUFriend.kext e o CPUFriendDataProvider.kext em EFI/OC/Kexts. Insere no config.plist e reboot.  
+  
+Não funcionou. Peguei o CPUFriendDataProvider do 13thdemarch em  
+https://github.com/13thdemarch/b660m-aorus-pro-hackintosh/tree/master/EFI/OC/Kexts/CPUFriendDataProvider.kext/Contents  
 
+Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.  
+|Geekbench 6.3.0|sem CPUFriend|com CPUFriend|
+|----------:|------------:|------------:|
+|Single-Core|         1643|         1866|
+| Multi-Core|         6128|         7626|
+  
+  
 **Overclock Radeon**  
 https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md  
