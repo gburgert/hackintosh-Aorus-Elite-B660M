@@ -363,7 +363,7 @@ Target:          67
   
 **Root->Misc->Security**  
 ```
-AllowSetDefault:      True
+AllowSetDefault:      True (seta default boot com Ctrl+Enter no menu)
 ExposeSensitiveData:  8 (0x08 máximo documentado)
 ScanPolicy:           0
 SecureBootModel:      Default
@@ -459,10 +459,6 @@ assign
 Para abrir o drive EFI precisa rodar o explorer++ como admin e copiar os arquivos.  
 Colocar o EFI montado na partição EFI do pendrive de instalação do MacOS.  
   
-## TODO  
-https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
-Configurar o cpufriend.  
-  
 ## Cuticuti  
   
 **SMBus**  
@@ -479,6 +475,8 @@ O SMBus tá funcionando sem precisar fazer nada.
   
 **CPUFriend**  
 https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#using-cpufriend  
+https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
+
 ```
 git clone https://github.com/corpnewt/CPUFriendFriend.git
 cd CPUFriendFriend
@@ -507,7 +505,7 @@ Gravou CPUFriendDataProvider.kext no Results.
 https://github.com/acidanthera/CPUFriend/releases  
 Colocar o CPUFriend.kext e o CPUFriendDataProvider.kext em EFI/OC/Kexts. Insere no config.plist e reboot.  
   
-Não funcionou. Peguei o CPUFriendDataProvider do 13thdemarch em  
+Não funcionou. Peguei o CPUFriendDataProvider do 13thdemarch  
 https://github.com/13thdemarch/b660m-aorus-pro-hackintosh/tree/master/EFI/OC/Kexts/CPUFriendDataProvider.kext/Contents  
 
 Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.  
@@ -516,6 +514,19 @@ Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.
 |Single-Core|         1643|         1866|
 | Multi-Core|         6128|         7626|
   
-  
+https://github.com/stevezhengshiqi/one-key-cpufriend?tab=readme-ov-file#before-install  
+  NOTE: It is recommended to disable CPUFriend.kext and CPUFriendDataProvider.kext before a macOS upgrade. You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
+
 **Overclock Radeon**  
 https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md  
+
+**Logs de boot**  
+```
+sudo log show --predicate "processID == 0" --start $(date "+%Y-%m-%d") --debug
+```
+Procura por  **=== system boot:** pra seguir a partir do boot. O log tá limpo, exceto por um erro 
+>(AppleACPIPlatform) Could not install PciConfig handler for Root Bridge PC00  
+
+Depois eu vejo o que é isso.  
+
+Metade do log vem com \<private>. Tem uma receita aqui deixo indicado mas não precisei dos privates por enquanto https://forums.developer.apple.com/forums/thread/676706
