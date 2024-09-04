@@ -530,3 +530,9 @@ Procura por  **=== system boot:** pra seguir a partir do boot. O log tá limpo, 
 Depois eu vejo o que é isso.  
 
 Metade do log vem com \<private>. Tem uma receita aqui deixo indicado mas não precisei dos privates por enquanto https://forums.developer.apple.com/forums/thread/676706
+  
+**MacOS autologin**
+- Apple menu  > System Preferences.
+- Click on  Security & Privacy.
+- Click on lock
+- Untick Disable automatic login
