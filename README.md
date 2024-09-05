@@ -156,6 +156,11 @@ Ajuda num monte de coisa. Usei pra verificar se precisa ou não do SSDT-PLUG.
 **Hakintool**  
 https://github.com/benbaker76/Hackintool/  
 Como ele mesmo diz, canivete suíço do hackintosh. Se não usar agora, vai usar em algum momento.  
+  
+**MaciASL**  
+https://github.com/acidanthera/MaciASL
+Esse cara vai abrir os aml (tabela ACPI) que o SSDTTime vai fazer o dump. 
+  
 ## Preparando o EFI  
 https://dortania.github.io/OpenCore-Install-Guide/installer-guide/opencore-efi.html  
 Copiar OpenCore-1.0.1-DEBUG/X64/EFI. Daqui pra frente usa a cópia dessa pasta.  
@@ -461,6 +466,8 @@ Colocar o EFI montado na partição EFI do pendrive de instalação do MacOS.
   
 ## Cuticuti  
   
+Refinamentos e coisas que só dá pra rodar depois do MacOS instalado.  
+
 **SMBus**  
 https://dortania.github.io/Getting-Started-With-ACPI/Universal/smbus-methods/manual.html#verify-it-s-working  
 Tem um receitão falando como faz o SMBus. Fiz nada disso. No final executa um comando pra ver que deu certo  
@@ -516,7 +523,52 @@ Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.
   
 https://github.com/stevezhengshiqi/one-key-cpufriend?tab=readme-ov-file#before-install  
   NOTE: It is recommended to disable CPUFriend.kext and CPUFriendDataProvider.kext before a macOS upgrade. You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
+  
+**DMAR**  
+https://dortania.github.io/Getting-Started-With-ACPI/Universal/dmar-methods/manual.html#creating-our-customized-dmar-table  
+Clicar em SDDTTime/Results/ACPI/DMAR.aml vai abrir o MaciASL. Procurar por *Reserved Memory*.
+```
+[000h 0000   4]                    Signature : "DMAR"    [DMA Remapping table]
+[004h 0004   4]                 Table Length : 00000050
+[008h 0008   1]                     Revision : 01
+[009h 0009   1]                     Checksum : 42
+[00Ah 0010   6]                       Oem ID : "INTEL "
+[010h 0016   8]                 Oem Table ID : "EDK2    "
+[018h 0024   4]                 Oem Revision : 00000002
+[01Ch 0028   4]              Asl Compiler ID : "    "
+[020h 0032   4]        Asl Compiler Revision : 01000013
 
+[024h 0036   1]           Host Address Width : 26
+[025h 0037   1]                        Flags : 01
+[026h 0038  10]                     Reserved : 00 00 00 00 00 00 00 00 00 00
+
+[030h 0048   2]                Subtable Type : 0000 [Hardware Unit Definition]
+[032h 0050   2]                       Length : 0020
+
+[034h 0052   1]                        Flags : 01
+[035h 0053   1]                     Reserved : 00
+[036h 0054   2]           PCI Segment Number : 0000
+[038h 0056   8]        Register Base Address : 00000000FED91000
+
+[040h 0064   1]            Device Scope Type : 03 [IOAPIC Device]
+[041h 0065   1]                 Entry Length : 08
+[042h 0066   2]                     Reserved : 0000
+[044h 0068   1]               Enumeration ID : 02
+[045h 0069   1]               PCI Bus Number : 00
+
+[046h 0070   2]                     PCI Path : 1E,07
+
+
+[048h 0072   1]            Device Scope Type : 04 [Message-capable HPET Device]
+[049h 0073   1]                 Entry Length : 08
+[04Ah 0074   2]                     Reserved : 0000
+[04Ch 0076   1]               Enumeration ID : 00
+[04Dh 0077   1]               PCI Bus Number : 00
+
+[04Eh 0078   2]                     PCI Path : 1E,06
+```
+Não tem, então não preciso fazer esse.  
+  
 **Overclock Radeon**  
 https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md  
 
@@ -536,3 +588,22 @@ Metade do log vem com \<private>. Tem uma receita aqui deixo indicado mas não p
 - Click on  Security & Privacy.
 - Click on lock
 - Untick Disable automatic login
+  
+**MMio**  
+```
+09:895 00:065 OCABC: MMIO devirt start
+09:963 00:067 OCABC: MMIO devirt 0xC0000000 (0x10000 pages, 0x8000000000000001) skip 0
+10:031 00:068 OCABC: MMIO devirt 0xFC000000 (0x10 pages, 0x800000000000100D) skip 0
+10:101 00:069 OCABC: MMIO devirt 0xFE000000 (0x11 pages, 0x8000000000000001) skip 0
+10:170 00:069 OCABC: MMIO devirt 0xFEC00000 (0x1 pages, 0x8000000000000001) skip 0
+10:239 00:069 OCABC: MMIO devirt 0xFED00000 (0x1 pages, 0x8000000000000001) skip 0
+10:308 00:068 OCABC: MMIO devirt 0xFEE00000 (0x1 pages, 0x8000000000000001) skip 0
+10:375 00:067 OCABC: MMIO devirt 0xFF000000 (0x1000 pages, 0x800000000000100D) skip 0
+10:445 00:070 OCABC: MMIO devirt end, saved 278672 KB
+10:516 00:070 OCABC: Only 146/256 slide values are usable!
+10:585 00:069 OCABC: Valid slides - 0-94, 205-255
+```
+Essa mensagem de 146/256 tem ação a tomar.  
+  
+**Mais links**
+https://github.com/tarbaII/OpenCore-Install-Guide/blob/alderlake/config.plist/alder-lake.md
