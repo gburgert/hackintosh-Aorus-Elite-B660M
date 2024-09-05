@@ -523,6 +523,7 @@ Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.
   
 https://github.com/stevezhengshiqi/one-key-cpufriend?tab=readme-ov-file#before-install  
   NOTE: It is recommended to disable CPUFriend.kext and CPUFriendDataProvider.kext before a macOS upgrade. You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
+  Uma idéia seria tentar gerar o DataProvider sem o ID de CPU fake (Kernel->Emulate)  
   
 **DMAR**  
 https://dortania.github.io/Getting-Started-With-ACPI/Universal/dmar-methods/manual.html#creating-our-customized-dmar-table  
