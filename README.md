@@ -187,9 +187,9 @@ Installing: 2.0%
 Scanning for 14.6.1 installer
 Install finished successfully
 ```
-Deixou a imagem no /Applications com o nome de *Install MacOS Sonoma*. No pendrive, criei uma partição com o nome de *Install MacOS Sonoma* com 14GB usando o Disk Utility.
+Deixou a imagem no /Applications com o nome de *Install MacOS Sonoma*. No pendrive, criei uma partição com o nome de *Install MacOS Sonoma* com 16GB usando o Disk Utility.
 ```
-cd /Applications/Install macOS Sonoma.app/Contents/Resources
+cd /Applications/Install\ macOS\ Sonoma.app/Contents/Resources
 sudo ./createinstallmedia --volume /Volumes/Install\ macOS\ Sonoma
 Ready to start.
 To continue we need to erase the volume at /Volumes/Install macOS Sonoma.
