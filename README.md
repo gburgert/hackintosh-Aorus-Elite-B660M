@@ -161,8 +161,52 @@ Como ele mesmo diz, canivete suíço do hackintosh. Se não usar agora, vai usar
 https://github.com/acidanthera/MaciASL
 Esse cara vai abrir os aml (tabela ACPI) que o SSDTTime vai fazer o dump. 
   
+## Criando o pendrive  
+https://dortania.github.io/OpenCore-Install-Guide/installer-guide/mac-install.html#using-app-store  
+Estou fazendo noutro mac que tem disponível. A receita de Windows não funciona pra mim, mas já teve uma receita que era boa no windows.  
+```
+softwareupdate --list-full-installers;echo;echo "Please enter version number you wish to download:";read;$(if [ -n "$REPLY" ]; then; echo "softwareupdate --fetch-full-installer --full-installer-version "$REPLY; fi);
+Finding available software
+Software Update found the following full installers:
+* Title: macOS Sonoma, Version: 14.6.1, Size: 13340696KiB, Build: 23G93
+* Title: macOS Sonoma, Version: 14.6, Size: 13339695KiB, Build: 23G80
+* Title: macOS Sonoma, Version: 14.4.1, Size: 13298513KiB, Build: 23E224
+* Title: macOS Ventura, Version: 13.6.9, Size: 11920840KiB, Build: 22G830
+* Title: macOS Ventura, Version: 13.6.8, Size: 11922165KiB, Build: 22G820
+* Title: macOS Ventura, Version: 13.6.6, Size: 11917983KiB, Build: 22G630
+* Title: macOS Monterey, Version: 12.7.6, Size: 12118346KiB, Build: 21H1320
+* Title: macOS Monterey, Version: 12.7.4, Size: 12117810KiB, Build: 21H1123
+* Title: macOS Big Sur, Version: 11.7.10, Size: 12125478KiB, Build: 20G1427
+* Title: macOS Catalina, Version: 10.15.7, Size: 8055650KiB, Build: 19H15
+* Title: macOS Catalina, Version: 10.15.7, Size: 8055522KiB, Build: 19H2
+* Title: macOS Catalina, Version: 10.15.6, Size: 8055450KiB, Build: 19G2021
+
+Please enter version number you wish to download:
+14.6.1
+Installing: 2.0%
+Scanning for 14.6.1 installer
+Install finished successfully
+```
+Deixou a imagem no /Applications com o nome de *Install MacOS Sonoma*. No pendrive, criei uma partição com o nome de *Install MacOS Sonoma* com 14GB usando o Disk Utility.
+```
+cd /Applications/Install macOS Sonoma.app/Contents/Resources
+sudo ./createinstallmedia --volume /Volumes/Install\ macOS\ Sonoma
+Ready to start.
+To continue we need to erase the volume at /Volumes/Install macOS Sonoma.
+If you wish to continue type (Y) then press return: y
+Erasing disk: 0%... 10%... 20%... 30%... 100%
+Copying essential files...
+Copying the macOS RecoveryOS...
+Making disk bootable...
+Copying to disk: 0%... 10%... 20%... 30%... 40%... 50%... 60%... 70%... 80%... 90%... 100%
+Install media now available at "/Volumes/Install macOS Sonoma"
+```
+Demorou um tempão.  
+
 ## Preparando o EFI  
 https://dortania.github.io/OpenCore-Install-Guide/installer-guide/opencore-efi.html  
+Essa parte é no Windows, na máquina que vai receber o MacOS.  
+
 Copiar OpenCore-1.0.1-DEBUG/X64/EFI. Daqui pra frente usa a cópia dessa pasta.  
 ### Drivers  
 **Drivers Opencore**  
