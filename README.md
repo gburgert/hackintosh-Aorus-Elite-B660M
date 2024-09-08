@@ -1,4 +1,4 @@
-# Hackintosh 12100F - 21/8/24
+ # Hackintosh 12100F - 21/8/24
   
 Gigabyte Aorus Elite B660M DDR4  
 Seguindo as instruções de https://dortania.github.io/OpenCore-Install-Guide/macos-limits.html#cpu-support  
@@ -161,6 +161,31 @@ Como ele mesmo diz, canivete suíço do hackintosh. Se não usar agora, vai usar
 https://github.com/acidanthera/MaciASL
 Esse cara vai abrir os aml (tabela ACPI) que o SSDTTime vai fazer o dump. 
   
+**Homebrew**  
+https://brew.sh/  
+Precisa pra tudo. O apt-get do mac.
+```  
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"  
+```
+\
+**Propertree no mac**  
+Fica com tela preta. Pra resolver precisa instalar tk mais novo.  
+```
+python3 --version 
+--> Python 3.9.6 (versão nativa). Vou atualizar com o brew.
+brew install python
+--> Python has been installed as
+--> /usr/local/bin/python3
+brew install python-tk
+--> abrir um terminal novo
+python3 --version
+--> Python 3.12.5
+cd hackintosh/Propertree-master/Scripts
+python3 buildapp-select.py --> escolher tk 8.6
+--> Saved to: hackintosh/ProperTree/ProperTree.app
+```
+Copia o ProperTree.app para o /Applications  
+
 ## Criando o pendrive  
 https://dortania.github.io/OpenCore-Install-Guide/installer-guide/mac-install.html#using-app-store  
 Estou fazendo noutro mac que tem disponível. A receita de Windows não funciona pra mim, mas já teve uma receita que era boa no windows.  
@@ -374,7 +399,7 @@ Cpuid1Data    55060A00000000000000000000000000
 Cpuid1Mask    FFFFFFFF000000000000000000000000
 MinKernel     19.0.0
 ```
-  
+\
 **Root->Kernel->Quirks**  
 ```
 AppleXcpmCfgLock:        False  (Not needed if CFG-Lock is disabled in the BIOS)
@@ -384,7 +409,7 @@ PanicNoKextDump:         True
 PowerTimeoutKernelPanic: True
 ProvideCurrentCpuInfo:   True (precisa se bem me lembro por causa do fake cpu)
 ```
-  
+\
 **Root->Kernel-Patch**   
 Relevante quando tem E-cores. Não fez diferença no número de threads, mas deixo ele aqui pra não perder.  
 ```
@@ -399,9 +424,9 @@ Identifier: string kernel
 MinKernel: string 18.0.0
 Replace: data B9FF0000 0090
 ```
- 
-**Root->Kernel->Scheme->KernelArch**: (string) x86_64  
-  
+\
+**Root->Kernel->Scheme->KernelArch**: (string) x86_64   
+\
 **Root->Misc->Debug**  
 ```
 AppleDebug:      True
@@ -409,15 +434,17 @@ ApplePanic:      True
 DisableWatchDog: True
 Target:          67
 ```
-  
+\
 **Root->Misc->Security**  
 ```
 AllowSetDefault:      True (seta default boot com Ctrl+Enter no menu)
 ExposeSensitiveData:  8 (0x08 máximo documentado)
 ScanPolicy:           0
-SecureBootModel:      Default
+SecureBootModel:      Disabled (para instalar o Sonoma)
 Vault:                Optional
 ```  
+Depois de instalar o Sonoma pode voltar o SecureBootModel pra Default.  
+\
 **Root->NVRam->add**  
 Teclado https://github.com/acidanthera/OpenCorePkg/blob/master/Utilities/AppleKeyboardLayouts/AppleKeyboardLayouts.txt  
 [128] pt_BR - Brazilian-ABNT2 (lingua:teclado)  
@@ -437,14 +464,14 @@ boot-args:         -v  keepsyms=1 alcid=12
 csr-active-config: 03080000
 prev-lang:kbd:     en-US:128
 ```
-  
+\
 **Root->NVRam->delete**  
 Tive problema pra atualizar o valor do csr e esse delete ajudou.  
 ```
 ->7C436110-AB2A-4BBB-A880-FE41995C9F82
 2: (String) csr-active-config
 ```
-  
+\
 **Root->PlatformInfo->Generic**  
 Roda o gensmbios. Até inserir esses dados no config.plist a máquina não completava o boot. Suspeito que seja pela falta da ROM.  
 ```
@@ -467,13 +494,13 @@ SystemProductName:  MacPro7,1
 SystemSerialNumber: SSSSERIAL
 SystemUUID:         SSSSUUID
 ```
-  
+
 ### Processor type para restricted events  
 https://github.com/acidanthera/RestrictEvents  
 ProcessorType=0x601  (menos de 8 cores)  
-  
+\
 **Root->UEFI->Quirks->ReleaseUsbOwnership**: False (system freeze on boot. Not recommended unless specifically required)  
-  
+
 ## Intel BIOS settings  
 ### Disable  
     Fast Boot  
@@ -510,7 +537,7 @@ Colocar o EFI montado na partição EFI do pendrive de instalação do MacOS.
   
 ## Cuticuti  
   
-Refinamentos e coisas que só dá pra rodar depois do MacOS instalado.  
+Refinamentos e coisas que só dá pra fazer depois do MacOS instalado.  
 
 **SMBus**  
 https://dortania.github.io/Getting-Started-With-ACPI/Universal/smbus-methods/manual.html#verify-it-s-working  
@@ -522,25 +549,24 @@ No variant specified, falling back to release
   114    0 0xffffff7f98f8e000 0x1000     0x1000     com.apple.driver.AppleSMBusPCI (1.0.14d1) BEA35DB8-3718-30CA-AB29-8FBF5143D4B6 <16 7 6 3>
   163    1 0xffffff7f98f82000 0x7000     0x7000     com.apple.driver.AppleSMBusController (1.0.18d1) FE4A1901-4945-38E8-9F09-BAE75DBAB72C <162 16 15 7 6 3>
 ```  
-O SMBus tá funcionando sem precisar fazer nada. 
-  
+O SMBus tá funcionando sem precisar fazer nada.  
+\
 **CPUFriend**  
 https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#using-cpufriend  
 https://chriswayg.gitbook.io/opencore-visual-beginners-guide/advanced-topics/using-alder-lake#ssdts  
-
 ```
 git clone https://github.com/corpnewt/CPUFriendFriend.git
 cd CPUFriendFriend
 ./CPUFriendFriend.command
 ```
-* LFM:        0x08 (800MHz)  
+* LFM:        0x0A (1000MHz)  
 * EPP value:  0x00 (Modern iMac)  
 * Perf Bias:  0x01 (Modern iMac)  
 * MacBook Air SMBIOS: n  
 
-Usei 0x0A (1000MHz) no LFM. O Intel Power Gadget apresenta o core min em 0,8. Não achei essa informação na internet.  
+O Intel Power Gadget apresenta o core min em 0,8. Não achei essa informação na internet.  
 ```
-  #######################################################
+..#######################################################
  #                  CPUFriendFriend                    #
 #######################################################
 
@@ -552,23 +578,27 @@ Compiling SSDTs...
 
 Done.
 ```
-Gravou CPUFriendDataProvider.kext no Results.    
+Gravou CPUFriendDataProvider.kext no Results.  
 https://github.com/acidanthera/CPUFriend/releases  
 Colocar o CPUFriend.kext e o CPUFriendDataProvider.kext em EFI/OC/Kexts. Insere no config.plist e reboot.  
   
 Não funcionou. Peguei o CPUFriendDataProvider do 13thdemarch  
 https://github.com/13thdemarch/b660m-aorus-pro-hackintosh/tree/master/EFI/OC/Kexts/CPUFriendDataProvider.kext/Contents  
-
-Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.  
+  
+Esse foi. Clock máximo foi de 3.3GHz pra 4.3GHz.
 |Geekbench 6.3.0|sem CPUFriend|com CPUFriend|
 |----------:|------------:|------------:|
 |Single-Core|         1643|         1866|
 | Multi-Core|         6128|         7626|
   
 https://github.com/stevezhengshiqi/one-key-cpufriend?tab=readme-ov-file#before-install  
-  NOTE: It is recommended to disable CPUFriend.kext and CPUFriendDataProvider.kext before a macOS upgrade. You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
-  Uma idéia seria tentar gerar o DataProvider sem o ID de CPU fake (Kernel->Emulate)  
-  
+\>\>\>\>\> Lembrar disso <<<<<<  
+ > It is recommended to disable CPUFriend.kext and CPUFriendDataProvider.kext before a macOS upgrade.
+   
+ You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
+ 
+ O problema é que a receita que eu usei não rolou pra gerar outro quando atulizar. Uma idéia seria tentar gerar o DataProvider sem o ID de CPU fake (Kernel->Emulate)  
+\
 **DMAR**  
 https://dortania.github.io/Getting-Started-With-ACPI/Universal/dmar-methods/manual.html#creating-our-customized-dmar-table  
 Clicar em SDDTTime/Results/ACPI/DMAR.aml vai abrir o MaciASL. Procurar por *Reserved Memory*.
@@ -623,18 +653,19 @@ sudo log show --predicate "processID == 0" --start $(date "+%Y-%m-%d") --debug
 ```
 Procura por  **=== system boot:** pra seguir a partir do boot. O log tá limpo, exceto por um erro 
 >(AppleACPIPlatform) Could not install PciConfig handler for Root Bridge PC00  
-
+  
 Depois eu vejo o que é isso.  
 
-Metade do log vem com \<private>. Tem uma receita aqui deixo indicado mas não precisei dos privates por enquanto https://forums.developer.apple.com/forums/thread/676706
-  
-**MacOS autologin**
-- Apple menu  > System Preferences.
-- Click on  Security & Privacy.
-- Click on lock
-- Untick Disable automatic login
-  
+Metade do log vem com \<private>. Tem uma receita aqui deixo indicado mas não precisei dos privates por enquanto https://forums.developer.apple.com/forums/thread/676706  
+\
+**MacOS autologin - Sonoma**  
+- Apple menu  > System Settings
+- Click on Users & Groups
+- Click on Automatically log in as  
+
+\
 **MMio**  
+Esse veio dos logs do opencore que ficam na partição do EFI.  
 ```
 09:895 00:065 OCABC: MMIO devirt start
 09:963 00:067 OCABC: MMIO devirt 0xC0000000 (0x10000 pages, 0x8000000000000001) skip 0
@@ -648,7 +679,7 @@ Metade do log vem com \<private>. Tem uma receita aqui deixo indicado mas não p
 10:516 00:070 OCABC: Only 146/256 slide values are usable!
 10:585 00:069 OCABC: Valid slides - 0-94, 205-255
 ```
-Essa mensagem de 146/256 tem ação a tomar.  
+Essa mensagem de *Only 146/256 slide values are usable!* tem ação a tomar.  
   
 **Mais links**
 https://github.com/tarbaII/OpenCore-Install-Guide/blob/alderlake/config.plist/alder-lake.md
