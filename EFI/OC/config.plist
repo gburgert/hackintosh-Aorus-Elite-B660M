@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>#WARNING - 1</key>
-	<string>Atualizacao EFI 01/09/24</string>
+	<string>Atualizacao EFI 08/09/24</string>
 	<key>#WARNING - 2</key>
 	<string>Opencore 1.0.1 07/08/24</string>
 	<key>#WARNING - 3</key>
@@ -995,7 +995,7 @@
 			<key>ScanPolicy</key>
 			<integer>0</integer>
 			<key>SecureBootModel</key>
-			<string>Default</string>
+			<string>Disabled</string>
 			<key>Vault</key>
 			<string>Optional</string>
 		</dict>
@@ -1175,7 +1175,7 @@
 			<key>AdviseFeatures</key>
 			<false/>
 			<key>MLB</key>
-			<string>F5K2469024NK3F7A8</string>
+			<string></string>
 			<key>MaxBIOSVersion</key>
 			<false/>
 			<key>ProcessorType</key>
@@ -1189,9 +1189,9 @@
 			<key>SystemProductName</key>
 			<string>MacPro7,1</string>
 			<key>SystemSerialNumber</key>
-			<string>F5KJPUY7P7QM</string>
+			<string></string>
 			<key>SystemUUID</key>
-			<string>2819DFB0-34E3-44F5-9169-61F24FA73F4F</string>
+			<string></string>
 		</dict>
 		<key>UpdateDataHub</key>
 		<true/>
