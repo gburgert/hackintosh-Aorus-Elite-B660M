@@ -595,6 +595,8 @@ https://github.com/stevezhengshiqi/one-key-cpufriend?tab=readme-ov-file#before-i
  You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
  
  O problema é que a receita que eu usei não rolou pra gerar outro quando atulizar. Uma idéia seria tentar gerar o DataProvider sem o ID de CPU fake (Kernel->Emulate)  
+
+ CPUFriendDataProvider russo: https://applelife.ru/threads/ustanovka-macos-big-sur-11-na-intel-pc.2945052/page-547#post-934944  
 \
 **DMAR**  
 https://dortania.github.io/Getting-Started-With-ACPI/Universal/dmar-methods/manual.html#creating-our-customized-dmar-table  
