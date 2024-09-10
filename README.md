@@ -287,7 +287,7 @@ https://github.com/acidanthera/RestrictEvents
 --> fica com RestrictEvents.kext  
   
 **Mapeamento USB**  
-No windows, roda o usbtool  
+No windows, roda o usbtool. O Sonoma é sensível tem que fazer isso antes do install.  
 ```
 C - change settings
 C - bind companions disable
@@ -302,7 +302,7 @@ T:2,4,6,8,9,10,11:0 (USB2 A)
 T:18,20,25,26:3 (USB3 A)
 T:3:8 (USBC - usb2). Deixei esse caso tenha algum maluco usb2 que seja tipo C. É a porta da frente do gabinete.
 ```
-Total 15 portas. Desliguei o companion porque tem mais de 15 portas reconhecidas e queria desativar o USB2 em algumas, mas ele desliga o USB3 junto se tiver o companion ligado e também porque tinha portas fantasmas ligando junto com as USB2.  
+Total 15 portas. Desliguei o companion porque tem mais de 15 portas reconhecidas e queria desativar o USB2 em algumas, mas ele desliga o USB3 junto se tiver o companion ligado e também porque tinha portas USB3 fantasmas ligando junto com as USB2.  
 ```
 2,3,4,6,7,8,9,10,11,17,18,19,20,25,26
 K - build kext
@@ -389,7 +389,7 @@ SyncRuntimePermissions: True
 ```
   
 **Root->DeviceProperties->add**  
-https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#add-2
+https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#add-2  
 Removi PciRoot(0x0)/Pci(0x1b,0x0) - You can delete this property outright as it's unused for us at this time. We'll be using the boot-arg alcid=xxx instead to accomplish this.  
     
 **Root->Kernel->Emulate***  
@@ -448,11 +448,7 @@ Depois de instalar o Sonoma pode voltar o SecureBootModel pra Default.
 **Root->NVRam->add**  
 Teclado https://github.com/acidanthera/OpenCorePkg/blob/master/Utilities/AppleKeyboardLayouts/AppleKeyboardLayouts.txt  
 [128] pt_BR - Brazilian-ABNT2 (lingua:teclado)  
-```
-->C436110-AB2A-4BBB-A880-FE41995C9F82  
-boot-args: debug=0x100 alcid=3  
-prev-lang:kbd String en-US:128
-```
+
 ```
 ->4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102
 revcpuname:   String    Intel i3-12100F
@@ -497,7 +493,8 @@ SystemUUID:         SSSSUUID
 
 ### Processor type para restricted events  
 https://github.com/acidanthera/RestrictEvents  
-ProcessorType=0x601  (menos de 8 cores)  
+>ProcessorType=0x601  (menos de 8 cores)  
+
 \
 **Root->UEFI->Quirks->ReleaseUsbOwnership**: False (system freeze on boot. Not recommended unless specifically required)  
 
