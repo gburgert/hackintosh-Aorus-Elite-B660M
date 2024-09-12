@@ -1,4 +1,5 @@
- # Hackintosh 12100F - 21/8/24
+# Hackintosh 12100F - Sonoma  
+21/8/24
   
 Gigabyte Aorus Elite B660M DDR4  
 Seguindo as instruções de https://dortania.github.io/OpenCore-Install-Guide/macos-limits.html#cpu-support  
@@ -158,7 +159,7 @@ https://github.com/benbaker76/Hackintool/
 Como ele mesmo diz, canivete suíço do hackintosh. Se não usar agora, vai usar em algum momento.  
   
 **MaciASL**  
-https://github.com/acidanthera/MaciASL
+https://github.com/acidanthera/MaciASL  
 Esse cara vai abrir os aml (tabela ACPI) que o SSDTTime vai fazer o dump. 
   
 **Homebrew**  
@@ -186,7 +187,7 @@ python3 buildapp-select.py --> escolher tk 8.6
 ```
 Copia o ProperTree.app para o /Applications  
 
-## Criando o pendrive  
+## Criando o pendrive no Mac  
 https://dortania.github.io/OpenCore-Install-Guide/installer-guide/mac-install.html#using-app-store  
 Estou fazendo noutro mac que tem disponível. A receita de Windows não funciona pra mim, mas já teve uma receita que era boa no windows.  
 ```
