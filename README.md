@@ -233,7 +233,7 @@ Demorou um tempão.
 https://dortania.github.io/OpenCore-Install-Guide/installer-guide/opencore-efi.html  
 Essa parte é no Windows, na máquina que vai receber o MacOS.  
 
-Copiar OpenCore-1.0.1-DEBUG/X64/EFI. Daqui pra frente usa a cópia dessa pasta.  
+Copiar OpenCore-1.0.4-DEBUG/X64/EFI. Daqui pra frente usa a cópia dessa pasta.  
 ### Drivers  
 **Drivers Opencore**  
 --> em EFI\OC\Drivers deixa ResetNvramEntry.efi, OpenRuntime.efi  
@@ -533,6 +533,37 @@ assign
 Para abrir o drive EFI precisa rodar o explorer++ como admin e copiar os arquivos.  
 Colocar o EFI montado na partição EFI do pendrive de instalação do MacOS.  
   
+## Postinstall  
+  
+**Bluetooth**  
+https://dortania.github.io/Wireless-Buyers-Guide/types-of-wireless-card/pcie.html  
+Vai baixar esses abaixo:  
+https://github.com/acidanthera/AirportBrcmFixup/releases  
+https://github.com/acidanthera/BrcmPatchRAM/releases  
+AirpottBrcm.kext  
+BrcmPatchRAM: fica com BlueToolFixup, BrcmPatchRAM3, BrcmFirmwareData.kext  
+Tem um pulo do gato aqui https://github.com/acidanthera/bugtracker/issues/1054  
+--> depois de colocar no config.plist, mover o BrcmFirmwareData pra antes dos outros brcm senão dá kernel panic  
+https://github.com/acidanthera/AirportBrcmFixup  
+--> You have to block (or remove) AirPortBrcm4360_Injector.kext in 11+  
+  
+**Parear bluetooth no mac e no windows**  
+https://github.com/dortania/clover-laptop-guide/blob/master/extras/dual-booting-with-bluetooth-devices.md  
+  
+**kext pro wifi**  
+https://github.com/chris1111/Wireless-USB-OC-Big-Sur-Adapter  
+desativar csr: nvram->add->7C..82->csr-active-config 03080000  
+adicionar nvram->delete->7C..82->csr-active-config  
+reboot  
+Rodar o installer  
+--> ele coloca os drives no EFI do SSD. Copiar de volta pro EFI do git  
+--> inserir também os kexts no config.plist RtWlanU.kext e RtWlanU1827.kext  
+
+A receita pra manter o CSR ativo não funciona  
+https://github.com/chris1111/Wireless-USB-OC-Big-Sur-Adapter/discussions/167    
+
+Supported Wifi https://dortania.github.io/Wireless-Buyers-Guide/unsupported.html#supported-chipsets  
+\
 ## Cuticuti  
   
 Refinamentos e coisas que só dá pra fazer depois do MacOS instalado.  
@@ -595,7 +626,7 @@ https://github.com/stevezhengshiqi/one-key-cpufriend?tab=readme-ov-file#before-i
    
  You need to re-generate CPUFriendDataProvider.kext whenever you update to a new macOS version; otherwise, you may suffer from bad PM or even kernel panic.  
  
- O problema é que a receita que eu usei não rolou pra gerar outro quando atulizar. Uma idéia seria tentar gerar o DataProvider sem o ID de CPU fake (Kernel->Emulate)  
+ O problema é que a receita que eu usei não rolou pra gerar outro quando atualizar. Uma idéia seria tentar gerar o DataProvider sem o ID de CPU fake (Kernel->Emulate)  
 
  CPUFriendDataProvider russo: https://applelife.ru/threads/ustanovka-macos-big-sur-11-na-intel-pc.2945052/page-547#post-934944  
 \
